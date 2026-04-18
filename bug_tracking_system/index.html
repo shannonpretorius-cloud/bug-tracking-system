@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Document</title>
+    
+</head>
+<body>
+     
+    
+
+
+     <h1>Bug Tracker</h1>
+
+     <!-- Add Ticket -->
+     <input type="text" id="bugTitle" placeholder="Enter bug title">
+     <button onclick="addTicket()">Add Ticket</button>
+
+     <br><br>
+
+     <!-- Search Ticket -->
+     <input type="text" id="searchBox" placeholder="Search by title or status..." onkeyup="renderTickets()">
+
+     <!-- Filter Tickets -->
+     <select id="statusFilter" onchange="renderTickets()">
+        <option value="all">All</option>
+        <option value="Open">Open</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+        <option value="Overdue">Overdue</option>
+     </select>
+
+     <br><br>
+
+     <!-- Display Tickets -->   
+     <ul id="ticketList"></ul>
+
+     <!-- Linked JavaScript -->
+     <script src="script.js"></script>
+
+</body>
+</html>
