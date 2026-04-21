@@ -109,10 +109,14 @@
 
     <script src="script.js"></script>
     <script>
-        // Guard: If no session, go to login immediately
-        if (!localStorage.getItem('sessionUser')) {
-            window.location.href = 'login.html';
-        }
+       // Guard: If no session, go to login immediately
+    if (!localStorage.getItem('sessionUser')) {
+        window.location.href = 'login.html';
+    }
+
+    // Populate dropdowns on page load
+    populateAssigneeDropdown();
+    populateProjectDropdown();
     </script>
 </body>
 </html>

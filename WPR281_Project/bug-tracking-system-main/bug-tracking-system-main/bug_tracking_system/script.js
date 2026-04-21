@@ -238,3 +238,11 @@ function saveIssueEdits() {
     syncAndRender();
     document.getElementById('issueDetailModal').style.display = 'none';
 }
+
+// Ensure dropdowns are populated when dashboard loads
+if (document.getElementById('assigneeSelect')) {
+    populateAssigneeDropdown('assigneeSelect');
+}
+if (document.getElementById('projectSelect')) {
+    populateProjectDropdown('projectSelect');
+}

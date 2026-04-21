@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>People</title>
@@ -17,9 +17,7 @@
     <div class="card">
       <h3>Add Person</h3>
       <input id="personName" placeholder="Name">
-      <input id="personRole" placeholder="Role">
-      <input id="personEmail" placeholder="Email">
-      <button onclick="createPerson()" class="btn btn-primary">Add</button>
+      <button onclick="addPerson()" class="btn btn-primary">Add</button>
     </div>
 
     <div class="card">
@@ -30,21 +28,26 @@
 
   <script src="script.js"></script>
   <script>
-    function createPerson() {
-      const name = personName.value.trim();
-      const role = personRole.value.trim();
-      const email = personEmail.value.trim();
+    function addPerson() {
+      const name = document.getElementById('personName').value.trim();
       if (!name) return alert("Name required");
-      people.push({ id: Date.now(), name, role, email });
+      people.push({ id: Date.now(), name });
       localStorage.setItem('people', JSON.stringify(people));
       renderPeople();
+      document.getElementById('personName').value = '';
     }
+
     function renderPeople() {
-      peopleList.innerHTML = "";
+      const list = document.getElementById('peopleList');
+      list.innerHTML = '';
       people.forEach(p => {
-        peopleList.innerHTML += `<li>${p.name} - ${p.role} - ${p.email}</li>`;
+        const li = document.createElement('li');
+        li.textContent = p.name;
+        list.appendChild(li);
       });
     }
+
+    // Initial render
     renderPeople();
   </script>
 </body>
