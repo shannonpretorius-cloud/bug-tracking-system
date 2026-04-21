@@ -37,11 +37,74 @@
                         <option value="High">High</option>
                     </select>
                 </div>
+
+                <!-- 🔵 ADDED: Assign To -->
+                <div class="form-group">
+                    <label>Assign To</label>
+                    <select id="assigneeSelect">
+                        <option value="0">Unassigned</option>
+                    </select>
+                </div>
+
+                <!-- 🔵 ADDED: Project -->
+                <div class="form-group">
+                    <label>Project</label>
+                    <select id="projectSelect">
+                        <option value="0">No Project</option>
+                    </select>
+                </div>
+
                 <button type="submit" class="btn btn-primary">Add Ticket</button>
             </form>
         </div>
 
         <div id="issueList"></div>
+    </div>
+
+    <!-- 🔵 ADDED: CUSTOM CENTERED MODAL -->
+    <div id="issueDetailModal" style="
+        display:none;
+        position: fixed;
+        top:0; left:0;
+        width:100%; height:100%;
+        background: rgba(0,0,0,0.5);
+        justify-content:center;
+        align-items:center;
+        z-index: 9999;
+    ">
+        <div class="card" style="max-width:600px; width:90%; margin:auto;">
+            <h3>Edit Issue</h3>
+
+            <label>Summary</label>
+            <input type="text" id="detailSummary">
+
+            <label>Description</label>
+            <textarea id="detailDescription"></textarea>
+
+            <label>Priority</label>
+            <select id="detailPriority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+
+            <label>Status</label>
+            <select id="detailStatus">
+                <option value="Open">Open</option>
+                <option value="Closed">Closed</option>
+            </select>
+
+            <label>Assignee</label>
+            <select id="detailAssignee"></select>
+
+            <label>Project</label>
+            <select id="detailProject"></select>
+
+            <div style="margin-top:15px; display:flex; justify-content:space-between;">
+                <button onclick="saveIssueEdits()" class="btn btn-primary">Save Changes</button>
+                <button onclick="document.getElementById('issueDetailModal').style.display='none'" class="btn btn-outline-danger">Close</button>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>

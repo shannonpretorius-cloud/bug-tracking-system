@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Projects</title>
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">Projects</div>
+    <div class="profile-area">
+      <button onclick="window.location.href='index.html'" class="btn btn-primary">Back</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h3>Add Project</h3>
+      <input id="projectName" placeholder="Project Name">
+      <input id="projectCode" placeholder="Code">
+      <input id="projectDescription" placeholder="Description">
+      <button onclick="createProject()" class="btn btn-primary">Add</button>
+    </div>
+
+    <div class="card">
+      <h3>Projects List</h3>
+      <ul id="projectsList"></ul>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function createProject() {
+      const name = projectName.value.trim();
+      const code = projectCode.value.trim();
+      const description = projectDescription.value.trim();
+      if (!name) return alert("Project name required");
+      projects.push({ id: Date.now(), name, code, description });
+      localStorage.setItem('projects', JSON.stringify(projects));
+      renderProjects();
+    }
+    function renderProjects() {
+      projectsList.innerHTML = "";
+      projects.forEach(p => {
+        projectsList.innerHTML += `<li>${p.name} (${p.code}) - ${p.description}</li>`;
+      });
+    }
+    renderProjects();
+  </script>
+</body>
+</html>

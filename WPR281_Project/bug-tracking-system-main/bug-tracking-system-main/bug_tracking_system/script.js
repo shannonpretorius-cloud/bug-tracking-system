@@ -3,7 +3,6 @@ let issues = JSON.parse(localStorage.getItem('bugs')) || [];
 let activeUser = JSON.parse(localStorage.getItem('sessionUser')) || null;
 
 //SIGN UP LOGIC 
-
 function addUser() {
     const name = document.getElementById('regName').value.trim();
     const surname = document.getElementById('regSurname').value.trim();
@@ -40,7 +39,6 @@ function addUser() {
 }
 
 //LOGIN LOGIC 
-
 function handleSignIn() {
     const emailInput = document.getElementById('loginEmail').value.trim();
     const passInput = document.getElementById('loginPass').value.trim();
@@ -62,7 +60,6 @@ function logout() {
 }
 
 //BUG TRACKER LOGIC 
-
 // Attach listener to the Ticket Form (if the form exists on the current page)
 if (document.getElementById('issueForm')) {
     document.getElementById('issueForm').addEventListener('submit', function(e) {
@@ -72,7 +69,11 @@ if (document.getElementById('issueForm')) {
             id: Date.now(), 
             summary: document.getElementById('summary').value, 
             priority: document.getElementById('priority').value, 
-            status: 'Open' 
+            status: 'Open',
+            
+            assigneeId: Number(document.getElementById('assigneeSelect')?.value || 0),
+            projectId: Number(document.getElementById('projectSelect')?.value || 0),
+            description: document.getElementById('description')?.value || ''
         };
 
         issues.push(newIssue);
@@ -96,6 +97,10 @@ function renderIssues() {
     document.getElementById('navUserName').innerText = `${activeUser.name} ${activeUser.surname} (@${activeUser.username})`;
     document.getElementById('navUserPic').src = activeUser.pic;
 
+    
+    populateAssigneeDropdown();
+    populateProjectDropdown();
+
     list.innerHTML = '';
     issues.forEach(issue => {
         // Determine color styling based on priority
@@ -110,6 +115,10 @@ function renderIssues() {
                             <small class="text-muted">ID: ${issue.id.toString().slice(-4)}</small>
                         </div>
                         <h6 class="fw-bold">${issue.summary}</h6>
+
+                        
+                        <small class="text-muted">Project: ${getProjectName(issue.projectId || 0)}</small><br>
+                        <small class="text-muted">Assigned to: ${getPersonName(issue.assigneeId || 0)}</small>
                         
                         <div class="mt-2 mb-3">
                             <label class="small text-muted">Priority:</label>
@@ -126,6 +135,8 @@ function renderIssues() {
                                 <button onclick="toggleStatus(${issue.id})" class="btn btn-sm ${issue.status === 'Open' ? 'btn-success' : 'btn-secondary'}">
                                     ${issue.status === 'Open' ? 'Close' : 'Open'}
                                 </button>
+                                
+                                <button onclick="openIssueDetail(${issue.id})" class="btn btn-sm btn-outline-primary">View</button>
                                 <button onclick="deleteIssue(${issue.id})" class="btn btn-sm btn-outline-danger border-0">Delete</button>
                             </div>
                         </div>
@@ -155,3 +166,56 @@ function deleteIssue(id) {
 if (document.getElementById('issueList')) { 
     renderIssues(); 
 }
+
+// ---------------------------------------------------
+// ADDED: Dominic's functionality
+// ---------------------------------------------------
+
+// Arrays for people and projects
+let people = JSON.parse(localStorage.getItem('people')) || [];
+let projects = JSON.parse(localStorage.getItem('projects')) || [];
+
+// Helpers to get names
+function getPersonName(id) {
+    const p = people.find(x => x.id === id);
+    return p ? p.name : 'Unassigned';
+}
+function getProjectName(id) {
+    const p = projects.find(x => x.id === id);
+    return p ? p.name : 'No Project';
+}
+
+// Populate dropdowns
+function populateAssigneeDropdown(elementId = 'assigneeSelect') {
+    const select = document.getElementById(elementId);
+    if (!select) return;
+    select.innerHTML = '<option value="0">Unassigned</option>';
+    people.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = p.name;
+        select.appendChild(opt);
+    });
+}
+function populateProjectDropdown(elementId = 'projectSelect') {
+    const select = document.getElementById(elementId);
+    if (!select) return;
+    select.innerHTML = '<option value="0">No Project</option>';
+    projects.forEach(p => {
+        const opt = document.createElement('option');
+        opt.value = p.id;
+        opt.textContent = p.name;
+        select.appendChild(opt);
+    });
+}
+
+// Detail view / editing
+let currentIssueId = null;
+function openIssueDetail(id) {
+    const issue = issues.find(i => i.id === id);
+    if (!issue) return;
+    currentIssueId = id;
+    document.getElementById('detailSummary').value = issue.summary;
+    document.getElementById('detailDescription').value = issue.description || '';
+    document.getElementById('detailPriority').value = issue.priority;
+    document.getElementBy

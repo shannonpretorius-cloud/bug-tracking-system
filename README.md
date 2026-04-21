@@ -27,6 +27,14 @@ The Bug Tracking System is a simple web-based application designed to help users
 - Persistent storage using localStorage
 - Improved user interaction with buttons and dropdown filters
 
+### Dominic’s Contributions:
+- People management page (`people.html`) to add and list team members
+- Projects management page (`projects.html`) to add and list projects
+- Assigning tickets to people and projects via dropdowns
+- Displaying assigned person and project in the ticket summary view
+- Detailed modal view for editing tickets (summary, description, priority, status, assignee, project)
+- Saving edits back into localStorage with immediate UI refresh
+
 ---
 
 ## 4. Technologies Used
@@ -44,6 +52,7 @@ The system is structured into the following components:
 - **Ticket System:** Handles creation, editing, deletion, and status updates of tickets.
 - **Data Storage:** Uses browser localStorage to store ticket data persistently.
 - **Logic Functions:** JavaScript functions manage filtering, searching, and updating ticket data.
+- **People & Projects Management:** Separate pages to manage team members and projects, integrated into the ticket system.
 
 ---
 
@@ -51,7 +60,8 @@ The system is structured into the following components:
 1. Download or clone the project folder.
 2. Open the `index.html` file in any modern web browser.
 3. The system will load automatically and display the bug tracking interface.
-4. No installation or server setup is required.
+4. Use `people.html` and `projects.html` to add team members and projects.
+5. No installation or server setup is required.
 
 ---
 
@@ -75,10 +85,13 @@ Use the search bar to find tickets by title or status.
 ### Filter Tickets:
 Use the dropdown menu to filter tickets by status.
 
+### Manage People & Projects:
+Use `people.html` to add team members and `projects.html` to add projects. These appear in the dashboard dropdowns.
+
 ---
 
 ## 8. Data Storage Explanation
-The system uses `localStorage` to store ticket data in the browser. This allows tickets to remain saved even after the page is refreshed or reopened. Data is stored in JSON format and converted back into JavaScript objects when loaded.
+The system uses `localStorage` to store ticket, people, and project data in the browser. This allows tickets to remain saved even after the page is refreshed or reopened. Data is stored in JSON format and converted back into JavaScript objects when loaded.
 
 ---
 
