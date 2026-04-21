@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Projects</title>
@@ -17,9 +17,7 @@
     <div class="card">
       <h3>Add Project</h3>
       <input id="projectName" placeholder="Project Name">
-      <input id="projectCode" placeholder="Code">
-      <input id="projectDescription" placeholder="Description">
-      <button onclick="createProject()" class="btn btn-primary">Add</button>
+      <button onclick="addProject()" class="btn btn-primary">Add</button>
     </div>
 
     <div class="card">
@@ -35,9 +33,10 @@
       const code = document.getElementById('projectCode').value.trim();
       const description = document.getElementById('projectDescription').value.trim();
       if (!name) return alert("Project name required");
-      projects.push({ id: Date.now(), name, code, description });
+      projects.push({ id: Date.now(), name });
       localStorage.setItem('projects', JSON.stringify(projects));
       renderProjects();
+      document.getElementById('projectName').value = '';
     }
 
     function renderProjects() {
@@ -47,6 +46,8 @@
         list.innerHTML += `<li>${p.name} (${p.code}) - ${p.description}</li>`;
       });
     }
+
+    // Initial render
     renderProjects();
   </script>
 </body>
