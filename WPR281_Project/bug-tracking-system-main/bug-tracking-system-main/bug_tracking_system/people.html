@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>People</title>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="/WPR281_Project/index.css">
 </head>
 <body>
   <nav class="navbar">
@@ -28,8 +28,10 @@
 
   <script src="script.js"></script>
   <script>
-    function addPerson() {
+    function createPerson() {
       const name = document.getElementById('personName').value.trim();
+      const role = document.getElementById('personRole').value.trim();
+      const email = document.getElementById('personEmail').value.trim();
       if (!name) return alert("Name required");
       people.push({ id: Date.now(), name });
       localStorage.setItem('people', JSON.stringify(people));
@@ -39,7 +41,7 @@
 
     function renderPeople() {
       const list = document.getElementById('peopleList');
-      list.innerHTML = '';
+      list.innerHTML = "";
       people.forEach(p => {
         const li = document.createElement('li');
         li.textContent = p.name;

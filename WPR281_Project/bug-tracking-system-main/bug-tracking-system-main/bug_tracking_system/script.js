@@ -2,6 +2,10 @@
 let issues = JSON.parse(localStorage.getItem('bugs')) || [];
 let activeUser = JSON.parse(localStorage.getItem('sessionUser')) || null;
 
+// Arrays for people and projects
+let people = JSON.parse(localStorage.getItem('people')) || [];
+let projects = JSON.parse(localStorage.getItem('projects')) || [];
+
 //SIGN UP LOGIC 
 function addUser() {
     const name = document.getElementById('regName').value.trim();
@@ -38,6 +42,7 @@ function addUser() {
     window.location.href = 'index.html';
 }
 
+
 //LOGIN LOGIC 
 function handleSignIn() {
     const emailInput = document.getElementById('loginEmail').value.trim();
@@ -70,10 +75,11 @@ if (document.getElementById('issueForm')) {
             summary: document.getElementById('summary').value, 
             priority: document.getElementById('priority').value, 
             status: 'Open',
-            
             assigneeId: Number(document.getElementById('assigneeSelect')?.value || 0),
             projectId: Number(document.getElementById('projectSelect')?.value || 0),
-            description: document.getElementById('description')?.value || ''
+            description: document.getElementById('detailed')?.value || '',
+            createdBy: activeUser ? activeUser.username : 'Unkown',
+            dateIdentified: new Date().toLocaleDateString('en-ZA')
         };
 
         issues.push(newIssue);
@@ -98,8 +104,7 @@ function renderIssues() {
     document.getElementById('navUserPic').src = activeUser.pic;
 
     
-    populateAssigneeDropdown();
-    populateProjectDropdown();
+    
 
     list.innerHTML = '';
     issues.forEach(issue => {
@@ -115,8 +120,9 @@ function renderIssues() {
                             <small class="text-muted">ID: ${issue.id.toString().slice(-4)}</small>
                         </div>
                         <h6 class="fw-bold">${issue.summary}</h6>
-
                         
+                        <small class="text-muted">Reported By: @${issue.createdBy || 'Unknown'}</small><br>
+                        <small class="text-muted">Date Identified: ${issue.dateIdentified || 'N/A'}</small><br>
                         <small class="text-muted">Project: ${getProjectName(issue.projectId || 0)}</small><br>
                         <small class="text-muted">Assigned to: ${getPersonName(issue.assigneeId || 0)}</small>
                         
@@ -167,14 +173,6 @@ if (document.getElementById('issueList')) {
     renderIssues(); 
 }
 
-// ---------------------------------------------------
-// ADDED: Dominic's functionality
-// ---------------------------------------------------
-
-// Arrays for people and projects
-let people = JSON.parse(localStorage.getItem('people')) || [];
-let projects = JSON.parse(localStorage.getItem('projects')) || [];
-
 // Helpers to get names
 function getPersonName(id) {
     const p = people.find(x => x.id === id);
@@ -197,6 +195,7 @@ function populateAssigneeDropdown(elementId = 'assigneeSelect') {
         select.appendChild(opt);
     });
 }
+
 function populateProjectDropdown(elementId = 'projectSelect') {
     const select = document.getElementById(elementId);
     if (!select) return;
@@ -209,6 +208,9 @@ function populateProjectDropdown(elementId = 'projectSelect') {
     });
 }
 
+populateAssigneeDropdown();
+populateProjectDropdown();
+
 // Detail view / editing
 let currentIssueId = null;
 function openIssueDetail(id) {
@@ -219,30 +221,39 @@ function openIssueDetail(id) {
     document.getElementById('detailDescription').value = issue.description || '';
     document.getElementById('detailPriority').value = issue.priority;
     document.getElementById('detailStatus').value = issue.status;
-    populateAssigneeDropdown('detailAssignee');
-    populateProjectDropdown('detailProject');
-    document.getElementById('detailAssignee').value = issue.assigneeId || 0;
-    document.getElementById('detailProject').value = issue.projectId || 0;
+    document.getElementById('detailCreatedBy').innerText = issue.createdBy || 'Unknown';
+    document.getElementById('detailDateIdentified').innerText = issue.dateIdentified || 'N/A';
+    
+    //populate and set assignee dropdown
+    populateAssigneeDropdown('detailAssigneeSelect');
+    document.getElementById('detailAssigneeSelect').value = issue.assigneeId || 0;
+
+    // Populate and set project dropdown
+    populateProjectDropdown('detailProjectSelect');
+    document.getElementById('detailProjectSelect').value = issue.projectId || 0;
+
+    // Show the modal
     document.getElementById('issueDetailModal').style.display = 'flex';
+}
+
+function closeIssueDetail(){
+    document.getElementById('issueDetailModal').style.display = 'none';
+    currentIssueId = null;
 }
 
 function saveIssueEdits() {
     const issue = issues.find(i => i.id === currentIssueId);
     if (!issue) return;
+
     issue.summary = document.getElementById('detailSummary').value;
     issue.description = document.getElementById('detailDescription').value;
     issue.priority = document.getElementById('detailPriority').value;
     issue.status = document.getElementById('detailStatus').value;
-    issue.assigneeId = Number(document.getElementById('detailAssignee').value || 0);
-    issue.projectId = Number(document.getElementById('detailProject').value || 0);
+    issue.assigneeId = Number(document.getElementById('detailAssigneeSelect').value);
+    issue.projectId = Number(document.getElementById('detailProjectSelect').value);
+
     syncAndRender();
-    document.getElementById('issueDetailModal').style.display = 'none';
+    closeIssueDetail();
 }
 
-// Ensure dropdowns are populated when dashboard loads
-if (document.getElementById('assigneeSelect')) {
-    populateAssigneeDropdown('assigneeSelect');
-}
-if (document.getElementById('projectSelect')) {
-    populateProjectDropdown('projectSelect');
-}
+
