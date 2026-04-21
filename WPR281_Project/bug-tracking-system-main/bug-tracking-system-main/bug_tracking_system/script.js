@@ -218,4 +218,23 @@ function openIssueDetail(id) {
     document.getElementById('detailSummary').value = issue.summary;
     document.getElementById('detailDescription').value = issue.description || '';
     document.getElementById('detailPriority').value = issue.priority;
-    document.getElementBy
+    document.getElementById('detailStatus').value = issue.status;
+    populateAssigneeDropdown('detailAssignee');
+    populateProjectDropdown('detailProject');
+    document.getElementById('detailAssignee').value = issue.assigneeId || 0;
+    document.getElementById('detailProject').value = issue.projectId || 0;
+    document.getElementById('issueDetailModal').style.display = 'flex';
+}
+
+function saveIssueEdits() {
+    const issue = issues.find(i => i.id === currentIssueId);
+    if (!issue) return;
+    issue.summary = document.getElementById('detailSummary').value;
+    issue.description = document.getElementById('detailDescription').value;
+    issue.priority = document.getElementById('detailPriority').value;
+    issue.status = document.getElementById('detailStatus').value;
+    issue.assigneeId = Number(document.getElementById('detailAssignee').value || 0);
+    issue.projectId = Number(document.getElementById('detailProject').value || 0);
+    syncAndRender();
+    document.getElementById('issueDetailModal').style.display = 'none';
+}
