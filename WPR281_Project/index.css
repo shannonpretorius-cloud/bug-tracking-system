@@ -1,0 +1,71 @@
+body { font-family: 'Segoe UI', sans-serif; background-color: #f4f7f6; margin: 0; }
+        
+       
+        .navbar { 
+            background-color: #212529; 
+            border-top: 6px solid #0d6efd; 
+            color: white; 
+            padding: 10px 40px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .navbar-brand { font-size: 1.4rem; font-weight: bold; }
+        .profile-area { display: flex; align-items: center; gap: 15px; }
+        .profile-img { width: 42px; height: 42px; border-radius: 50%; border: 2px solid white; object-fit: cover; }
+
+        .container { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
+
+        /* Ticket Creation Card */
+        .card { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 25px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+            margin-bottom: 30px;
+        }
+        .form-row { display: flex; gap: 15px; align-items: flex-end; }
+        .form-group { flex: 1; display: flex; flex-direction: column; }
+        
+        /* Bug Ticket Grid and Spotlight Effect */
+        #issueList { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 25px; 
+        }
+        .ticket-card { 
+            background: white; 
+            border-radius: 10px; 
+            padding: 20px; 
+            border: 1px solid #eee; 
+            transition: 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        .ticket-card:hover { 
+            transform: translateY(-8px); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12); 
+            border-color: #0d6efd; 
+        }
+
+        
+        label { font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; color: #666; }
+        input, select { padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; }
+        
+        .btn { padding: 12px 20px; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-primary { background: #0d6efd; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-success { background: #198754; color: white; }
+        .btn-secondary { background: #6c757d; color: white; }
+        .btn-outline-danger { background: transparent; color: #dc3545; border: 1px solid #dc3545; }
+        .btn:hover { opacity: 0.85; }
+
+        
+        .badge { padding: 4px 10px; border-radius: 15px; font-size: 0.7rem; font-weight: bold; text-transform: uppercase; }
+        .bg-high { background: #f8d7da; color: #842029; }
+        .bg-medium { background: #fff3cd; color: #664d03; }
+        .bg-low { background: #d1e7dd; color: #0f5132; }
+
+        .footer-actions { margin-top: auto; padding-top: 15px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .closed-ticket { opacity: 0.6; filter: grayscale(50%); }
