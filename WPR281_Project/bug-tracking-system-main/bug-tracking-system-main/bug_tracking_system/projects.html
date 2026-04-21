@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Projects</title>
-  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="/WPR281_Project/index.css">
 </head>
 <body>
   <nav class="navbar">
@@ -31,18 +31,20 @@
   <script src="script.js"></script>
   <script>
     function createProject() {
-      const name = projectName.value.trim();
-      const code = projectCode.value.trim();
-      const description = projectDescription.value.trim();
+      const name = document.getElementById('projectName').value.trim();
+      const code = document.getElementById('projectCode').value.trim();
+      const description = document.getElementById('projectDescription').value.trim();
       if (!name) return alert("Project name required");
       projects.push({ id: Date.now(), name, code, description });
       localStorage.setItem('projects', JSON.stringify(projects));
       renderProjects();
     }
+
     function renderProjects() {
-      projectsList.innerHTML = "";
+      const list = document.getElementById('projectsList');
+      list.innerHTML = "";
       projects.forEach(p => {
-        projectsList.innerHTML += `<li>${p.name} (${p.code}) - ${p.description}</li>`;
+        list.innerHTML += `<li>${p.name} (${p.code}) - ${p.description}</li>`;
       });
     }
     renderProjects();

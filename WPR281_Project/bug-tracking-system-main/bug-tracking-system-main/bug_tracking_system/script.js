@@ -173,42 +173,6 @@ if (document.getElementById('issueList')) {
     renderIssues(); 
 }
 
-// ---------------------------------------------------
-// ADDED: Dominic's functionality
-// ---------------------------------------------------
-
-function addPerson(name){
-    const person = {
-        id: Date.now(),
-        name: name
-    };
-    people.push(person);
-    localStorage.setItem('people', JSON.stringify(people));
-    return person;
-}
-
-if (people.length === 0) {
-    addPerson("Marco Fourie");
-    addPerson("Dominic Smith");
-    addPerson("Justin Shaw");
-    addPerson("Shannon Pretorius");
-}
-
-function addProject(proj){
-    const project = {
-        id: Date.now(),
-        projectName: proj
-    };
-    projects.push(project);
-    localStorage.setItem('projects', JSON.stringify(projects));
-    return project;
-}
-
-if (projects.length === 0){
-    addProject("Inventory System");
-    addProject("Suppliers Dashboard");
-}
-
 // Helpers to get names
 function getPersonName(id) {
     const p = people.find(x => x.id === id);
@@ -231,6 +195,7 @@ function populateAssigneeDropdown(elementId = 'assigneeSelect') {
         select.appendChild(opt);
     });
 }
+
 function populateProjectDropdown(elementId = 'projectSelect') {
     const select = document.getElementById(elementId);
     if (!select) return;
@@ -238,7 +203,7 @@ function populateProjectDropdown(elementId = 'projectSelect') {
     projects.forEach(p => {
         const opt = document.createElement('option');
         opt.value = p.id;
-        opt.textContent = p.projectName;
+        opt.textContent = p.name;
         select.appendChild(opt);
     });
 }

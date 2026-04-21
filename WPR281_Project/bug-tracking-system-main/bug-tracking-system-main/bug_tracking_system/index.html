@@ -26,50 +26,57 @@
     <div class="container">
         <div class="card">
             <h3 style="margin-top: 0;">Create New Ticket</h3>
-            <form id="issueForm" class="form-row">
-                <div class="form-group" style="flex: 3;">
-                    <label>Brief Description</label>
-                    <input type="text" id="summary" placeholder="Briefly describe the bug..." required>
-                </div>
-                <div class="form-group">
-                    <label>Priority</label>
-                    <select id="priority">
-                        <option value="Low">Low</option>
-                        <option value="Medium" selected>Medium</option>
-                        <option value="High">High</option>
-                    </select>
+            
+            <form id="issueForm">
+                <div class="form-row">
+                    <div class="form-group" style="flex: 3;">
+                        <label>Brief Description</label>
+                        <input type="text" id="summary" placeholder="Briefly describe the bug..." required>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="priority">
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+
+                    <!--  ADDED: Assign To -->
+                    <div class="form-group">
+                        <label>Assign To</label>
+                        <select id="assigneeSelect">
+                            <option value="0">Unassigned</option>
+                        </select>
+                    </div>
+
+                    <!--  ADDED: Project -->
+                    <div class="form-group">
+                        <label>Project</label>
+                        <select id="projectSelect">
+                            <option value="0">No Project</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2"><button type="submit" class="btn btn-primary w-100">Add Ticket</button></div>
                 </div>
 
-                <!-- 🔵 ADDED: Assign To -->
-                <div class="form-group">
-                    <label>Assign To</label>
-                    <select id="assigneeSelect">
-                        <option value="0">Unassigned</option>
-                    </select>
+                <div class="form-row">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Detailed Description</label>
+                        <input type="text" id="detailed" placeholder="Describe the bug in detail..." required>
+                    </div>
                 </div>
-
-                <!-- 🔵 ADDED: Project -->
-                <div class="form-group">
-                    <label>Project</label>
-                    <select id="projectSelect">
-                        <option value="0">No Project</option>
-                    </select>
-                </div>
-
-                <div class="col-md-2"><button type="submit" class="btn btn-primary w-100">Add Ticket</button></div>
             </form>
-            <form id="detailedForm" class="form-row">
-                <div class="form-group" style="flex: 3;">
-                    <label>Detailed Description</label>
-                    <input type="text" id="detailed" placeholder="Describe the bug in detail..." required>
-                </div>
-            </form>
+            <br>
+            <button onclick="window.location.href='people.html'" class="btn btn-secondary">Add Person</button>
+            <button onclick="window.location.href='projects.html'" class="btn btn-secondary">Add Project</button>
         </div>
 
         <div id="issueList" class="row"></div>
     </div>
 
-    <!-- 🔵 ADDED: CUSTOM CENTERED MODAL -->
+    <!-- CUSTOM CENTERED MODAL -->
     <div id="issueDetailModal" style="
         display:none;
         position:fixed;
@@ -121,7 +128,7 @@
         </div>
     </div>
 
-    <script src="script.js" defer></script>
+    <script src="script.js"></script>
     <script>
         // Guard: If no session, go to login immediately
         if (!localStorage.getItem('sessionUser')) {
