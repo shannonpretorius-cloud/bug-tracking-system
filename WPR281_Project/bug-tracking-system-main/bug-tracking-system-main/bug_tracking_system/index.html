@@ -84,29 +84,35 @@
             <h3>Edit Issue</h3>
 
             <label>Summary</label>
-            <input type="text" id="detailSummary">
+            <input type="text" id="detailSummary" class="form-control mb-2">
 
             <label>Description</label>
-            <textarea id="detailDescription"></textarea>
+            <textarea id="detailDescription" class="form-control mb-2"></textarea>
 
             <label>Priority</label>
-            <select id="detailPriority">
+            <select id="detailPriority" class="form-select mb-2">
                 <option value="Low">Low</option>
                 <option value="Medium">Medium</option>
                 <option value="High">High</option>
             </select>
 
             <label>Status</label>
-            <select id="detailStatus">
+            <select id="detailStatus" class="form-select mb-2">
                 <option value="Open">Open</option>
                 <option value="Closed">Closed</option>
             </select>
 
             <label>Assignee</label>
-            <select id="detailAssignee"></select>
+            <select id="detailAssigneeSelect" class="form-select mb-2"></select>
 
             <label>Project</label>
-            <select id="detailProject"></select>
+            <select id="detailProjectSelect" class="form-select mb-2"></select>
+
+            <label>Reported by</label>
+            <p id="detailCreatedBy" class="text-muted"></p>
+
+            <label>Date Identified</label>
+            <p id="detailDateIdentified" class="text-muted"></p>
 
             <div style="margin-top:15px; display:flex; justify-content:space-between;">
                 <button onclick="saveIssueEdits()" class="btn btn-primary">Save Changes</button>

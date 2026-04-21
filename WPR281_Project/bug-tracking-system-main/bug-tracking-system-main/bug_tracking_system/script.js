@@ -42,6 +42,7 @@ function addUser() {
     window.location.href = 'index.html';
 }
 
+
 //LOGIN LOGIC 
 function handleSignIn() {
     const emailInput = document.getElementById('loginEmail').value.trim();
@@ -74,10 +75,11 @@ if (document.getElementById('issueForm')) {
             summary: document.getElementById('summary').value, 
             priority: document.getElementById('priority').value, 
             status: 'Open',
-            
             assigneeId: Number(document.getElementById('assigneeSelect')?.value || 0),
             projectId: Number(document.getElementById('projectSelect')?.value || 0),
-            description: document.getElementById('detailed')?.value || ''
+            description: document.getElementById('detailed')?.value || '',
+            createdBy: activeUser ? activeUser.username : 'Unkown',
+            dateIdentified: new Date().toLocaleDateString('en-ZA')
         };
 
         issues.push(newIssue);
@@ -118,9 +120,9 @@ function renderIssues() {
                             <small class="text-muted">ID: ${issue.id.toString().slice(-4)}</small>
                         </div>
                         <h6 class="fw-bold">${issue.summary}</h6>
-                        <p>${issue.description}</p>
                         
-                        <small class="text-muted">Project: ${getAss(issue.assigneeSelect || 0)}</small><br>
+                        <small class="text-muted">Reported By: @${issue.createdBy || 'Unknown'}</small><br>
+                        <small class="text-muted">Date Identified: ${issue.dateIdentified || 'N/A'}</small><br>
                         <small class="text-muted">Project: ${getProjectName(issue.projectId || 0)}</small><br>
                         <small class="text-muted">Assigned to: ${getPersonName(issue.assigneeId || 0)}</small>
                         
@@ -253,5 +255,40 @@ function openIssueDetail(id) {
     document.getElementById('detailSummary').value = issue.summary;
     document.getElementById('detailDescription').value = issue.description || '';
     document.getElementById('detailPriority').value = issue.priority;
-    //document.getElementBy
-    }
+    document.getElementById('detailStatus').value = issue.status;
+    document.getElementById('detailCreatedBy').innerText = issue.createdBy || 'Unknown';
+    document.getElementById('detailDateIdentified').innerText = issue.dateIdentified || 'N/A';
+    
+    //populate and set assignee dropdown
+    populateAssigneeDropdown('detailAssigneeSelect');
+    document.getElementById('detailAssigneeSelect').value = issue.assigneeId || 0;
+
+    // Populate and set project dropdown
+    populateProjectDropdown('detailProjectSelect');
+    document.getElementById('detailProjectSelect').value = issue.projectId || 0;
+
+    // Show the modal
+    document.getElementById('issueDetailModal').style.display = 'flex';
+}
+
+function closeIssueDetail(){
+    document.getElementById('issueDetailModal').style.display = 'none';
+    currentIssueId = null;
+}
+
+function saveIssueEdits() {
+    const issue = issues.find(i => i.id === currentIssueId);
+    if (!issue) return;
+
+    issue.summary = document.getElementById('detailSummary').value;
+    issue.description = document.getElementById('detailDescription').value;
+    issue.priority = document.getElementById('detailPriority').value;
+    issue.status = document.getElementById('detailStatus').value;
+    issue.assigneeId = Number(document.getElementById('detailAssigneeSelect').value);
+    issue.projectId = Number(document.getElementById('detailProjectSelect').value);
+
+    syncAndRender();
+    closeIssueDetail();
+}
+
+
