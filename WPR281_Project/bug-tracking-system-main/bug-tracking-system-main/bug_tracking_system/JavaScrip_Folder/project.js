@@ -1,3 +1,5 @@
+let projects = JSON.parse(localStorage.getItem('projects')) || [];
+
 function addProject() {
       const name = document.getElementById('projectName').value.trim();
       if (!name) return alert("Project name required");
