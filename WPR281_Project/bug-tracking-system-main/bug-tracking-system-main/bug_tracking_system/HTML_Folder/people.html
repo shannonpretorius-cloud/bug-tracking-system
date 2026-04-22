@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>People</title>
+   <link rel="stylesheet" href="../CSS_Folder/index.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">People</div>
+    <div class="profile-area">
+      <button onclick="window.location.href='index.html'" class="btn btn-primary">Back</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h3>Add Person</h3>
+      <input id="personName" placeholder="Name">
+      <button onclick="addPerson()" class="btn btn-primary">Add</button>
+    </div>
+
+    <div class="card">
+      <h3>People List</h3>
+      <ul id="peopleList"></ul>
+    </div>
+  </div>
+
+  <script src="../JavaScrip_Folder/index.js"></script>
+  <script>
+    function addPerson() {
+      const name = document.getElementById('personName').value.trim();
+      if (!name) return alert("Name required");
+      people.push({ id: Date.now(), name });
+      localStorage.setItem('people', JSON.stringify(people));
+      renderPeople();
+      document.getElementById('personName').value = '';
+    }
+
+    function renderPeople() {
+      const list = document.getElementById('peopleList');
+      list.innerHTML = "";
+      people.forEach(p => {
+        const li = document.createElement('li');
+        li.textContent = p.name;
+        list.appendChild(li);
+      });
+    }
+
+    // Initial render
+    renderPeople();
+  </script>
+</body>
+</html>

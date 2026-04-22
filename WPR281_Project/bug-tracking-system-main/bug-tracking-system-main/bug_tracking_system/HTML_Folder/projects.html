@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Projects</title>
+   <link rel="stylesheet" href="../CSS_Folder/index.css">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-brand">Projects</div>
+    <div class="profile-area">
+      <button onclick="window.location.href='index.html'" class="btn btn-primary">Back</button>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="card">
+      <h3>Add Project</h3>
+      <input id="projectName" placeholder="Project Name">
+      <button onclick="addProject()" class="btn btn-primary">Add</button>
+    </div>
+
+    <div class="card">
+      <h3>Projects List</h3>
+      <ul id="projectsList"></ul>
+    </div>
+  </div>
+
+  <script src="../JavaScrip_Folder/index.js"></script>
+  <script>
+    function addProject() {
+      const name = document.getElementById('projectName').value.trim();
+      if (!name) return alert("Project name required");
+      projects.push({ id: Date.now(), name });
+      localStorage.setItem('projects', JSON.stringify(projects));
+      renderProjects();
+      document.getElementById('projectName').value = '';
+    }
+
+    function renderProjects() {
+      const list = document.getElementById('projectsList');
+      list.innerHTML = "";
+      projects.forEach(p => {
+        list.innerHTML += `<li>${p.name}</li>`;
+      });
+    }
+
+    // Initial render
+    renderProjects();
+  </script>
+</body>
+</html>
