@@ -28,10 +28,8 @@
 
   <script src="script.js"></script>
   <script>
-    function createPerson() {
+    function addPerson() {
       const name = document.getElementById('personName').value.trim();
-      const role = document.getElementById('personRole').value.trim();
-      const email = document.getElementById('personEmail').value.trim();
       if (!name) return alert("Name required");
       people.push({ id: Date.now(), name });
       localStorage.setItem('people', JSON.stringify(people));

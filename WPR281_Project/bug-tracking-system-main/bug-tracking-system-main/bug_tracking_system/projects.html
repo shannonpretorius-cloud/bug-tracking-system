@@ -28,10 +28,8 @@
 
   <script src="script.js"></script>
   <script>
-    function createProject() {
+    function addProject() {
       const name = document.getElementById('projectName').value.trim();
-      const code = document.getElementById('projectCode').value.trim();
-      const description = document.getElementById('projectDescription').value.trim();
       if (!name) return alert("Project name required");
       projects.push({ id: Date.now(), name });
       localStorage.setItem('projects', JSON.stringify(projects));
@@ -43,7 +41,7 @@
       const list = document.getElementById('projectsList');
       list.innerHTML = "";
       projects.forEach(p => {
-        list.innerHTML += `<li>${p.name} (${p.code}) - ${p.description}</li>`;
+        list.innerHTML += `<li>${p.name}</li>`;
       });
     }
 
